@@ -1,19 +1,20 @@
+locals {
+  module_version = "20.24.0"
+}
+
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
+  version         = local.module_version
   cluster_name    = var.cluster_name
   cluster_version = "1.30"
-  subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
-
+  subnet_ids      = module.vpc.private_subnets
 
   tags = var.tags
 
-  workers_group_defaults = {
-    root_volume_type = var.root_volume_type
+  node_groups = {
+    default = var.node_groups
   }
-
-  worker_groups = var.worker_groups
-
 }
 
 resource "aws_security_group" "worker_group" {

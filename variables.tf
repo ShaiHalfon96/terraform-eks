@@ -36,28 +36,23 @@ variable "root_volume_type" {
   default     = "gp2"
 }
 
-variable "worker_groups" {
-  description = "Configuration for worker groups in the EKS cluster."
-  type        = list(object({
-    name                          = string
+variable "node_groups" {
+  description = "Configuration for node groups in the EKS cluster."
+  type        = object({
+    desired_capacity              = number
+    max_capacity                  = number
+    min_capacity                  = number
     instance_type                 = string
-    asg_desired_capacity          = number
-    additional_security_group_ids = list(string)
-  }))
-  default = [
+    key_name                      = string
+  })
+  default =
     {
-      name                          = "worker-group-1"
+      desired_capacity              = 2
+      max_capacity                  = 3
+      min_capacity                  = 1
       instance_type                 = "t3.micro"
-      asg_desired_capacity          = 1
-      additional_security_group_ids = []
-    },
-    {
-      name                          = "worker-group-2"
-      instance_type                 = "t2.small"
-      asg_desired_capacity          = 1
-      additional_security_group_ids = []
-    },
-  ]
+      key_name                      = ""
+    }
 }
 
 variable "security_groups" {
