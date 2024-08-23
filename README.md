@@ -108,19 +108,21 @@ The following variables are available to customize the deployment:
 | `availability_zones` | List of availability zones to deploy resources in. | `list(string)` | `["us-west-2a"]` |
 | `cluster_version` | The Kubernetes version for the EKS cluster. | `string` | `"1.30"` |
 | `root_volume_type` | EBS volume type for the root volumes of worker nodes. | `string` | `"gp2"` |
-| `worker_groups` | List of worker group configurations. | `list(object)` | See below for default |
+| `node_groups` | List of node group configurations. | `list(object)` | See below for default |
 | `security_groups` |	A map of security groups with their configurations.	| `map(object)`	|See below for default |
 | `tags` | A map of tags to apply to resources. | `map(string)` | `{ Environment = "dev" }` |
 
-### Default `worker_groups` Configuration
+### Default `node_groups` Configuration
 
 ```hcl
 worker_groups = [
   {
-    name                          = "worker-group-1"
-    instance_type                 = "t3.micro"
-    asg_desired_capacity          = 1
-    additional_security_group_ids = []
+    desired_capacity = 2
+      max_capacity     = 3
+      min_capacity     = 1
+
+      instance_type = "t3.micro"
+      key_name       = ""
   }
 ]
 

@@ -45,8 +45,7 @@ variable "node_groups" {
     instance_type                 = string
     key_name                      = string
   })
-  default =
-    {
+  default = {
       desired_capacity              = 2
       max_capacity                  = 3
       min_capacity                  = 1
