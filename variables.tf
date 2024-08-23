@@ -10,12 +10,24 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
+variable "availability_zones" {
+  description = "List of availability zones to deploy resources in"
+  type        = list(string)
+  default     = ["us-east-1a"]
+}
+
 variable "tags" {
   description = "Tags to be applied to resources"
   type        = map(string)
   default     = {
     Environment = "dev"
   }
+}
+
+variable "cluster_version" {
+  description = "The Kubernetes version for the EKS cluster."
+  type        = string
+  default     = "1.30"
 }
 
 variable "root_volume_type" {
@@ -35,8 +47,8 @@ variable "worker_groups" {
   default = [
     {
       name                          = "worker-group-1"
-      instance_type                 = "t2.small"
-      asg_desired_capacity          = 2
+      instance_type                 = "t3.micro"
+      asg_desired_capacity          = 1
       additional_security_group_ids = []
     },
     {
@@ -75,14 +87,14 @@ variable "security_groups" {
           from_port   = 0
           to_port     = 65535
           protocol    = "tcp"
-          cidr_blocks = ["0.0.0.0/0"]
+          cidr_blocks = ["10.0.0.0/16"]
         }
       ]
       egress = [
         {
           from_port   = 0
           to_port     = 65535
-          protocol    = "tcp"
+          protocol    = "-1" # all protocols are allowed.
           cidr_blocks = ["0.0.0.0/0"]
         }
       ]

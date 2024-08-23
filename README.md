@@ -21,7 +21,7 @@ module "vpc" {
   version = "~> 5.0"
 
   name   = var.cluster_name
-  cidr   = var.cidr
+  cidr   = var.vpc_cidr
   azs    = local.azs
 
   private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 4, k)]
@@ -104,7 +104,7 @@ The following variables are available to customize the deployment:
 | Variable | Description | Type | Default |
 | --- | --- | --- | --- |
 | `cluster_name` | The name of the EKS cluster. | `string` | `"my-eks-cluster"` |
-| `cidr` | The CIDR block for the VPC. | `string` | `"10.0.0.0/16"` |
+| `vpc_cidr` | The CIDR block for the VPC. | `string` | `"10.0.0.0/16"` |
 | `availability_zones` | List of availability zones to deploy resources in. | `list(string)` | `["us-west-2a"]` |
 | `cluster_version` | The Kubernetes version for the EKS cluster. | `string` | `"1.30"` |
 | `root_volume_type` | EBS volume type for the root volumes of worker nodes. | `string` | `"gp2"` |

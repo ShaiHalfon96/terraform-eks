@@ -5,7 +5,7 @@ module "vpc" {
   name = var.cluster_name
   cidr = var.vpc_cidr
 
-  azs             = local.azs
+  azs             = var.availability_zones
   private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 4, k)]
   public_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 48)]
   intra_subnets   = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 52)]
