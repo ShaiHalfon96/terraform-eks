@@ -109,6 +109,7 @@ The following variables are available to customize the deployment:
 | `cluster_version` | The Kubernetes version for the EKS cluster. | `string` | `"1.30"` |
 | `root_volume_type` | EBS volume type for the root volumes of worker nodes. | `string` | `"gp2"` |
 | `worker_groups` | List of worker group configurations. | `list(object)` | See below for default |
+| `security_groups` |	A map of security groups with their configurations.	| `map(object)`	|See below for default |
 | `tags` | A map of tags to apply to resources. | `map(string)` | `{ Environment = "dev" }` |
 
 ### Default `worker_groups` Configuration
@@ -123,6 +124,30 @@ worker_groups = [
   }
 ]
 
+```
+### Default security_groups Configuration
+``` hcl
+security_groups = {
+  worker_sg = {
+    description = "Security group for EKS worker nodes"
+    ingress_rules = [
+      {
+        from_port   = 0
+        to_port     = 65535
+        protocol    = "tcp"
+        cidr_blocks = ["10.0.0.0/16"]
+      }
+    ]
+    egress_rules = [
+      {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    ]
+  }
+}
 ```
 ### 5. Example
 
