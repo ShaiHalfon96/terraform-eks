@@ -235,6 +235,6 @@ This module will output the following:
 
 | Output | Description |
 | --- | --- |
-| `eks_cluster_id` | The ID of the created EKS cluster. |
-| `vpc_id` | The ID of the created VPC. |
-| `worker_group_ids` | The IDs of the worker node groups. |
+| `eks_cluster_name` | The name of the EKS cluster. |
+| `eks_cluster_endpoint` | Endpoint for your Kubernetes API server. |
+| `eks_cluster_id` | The ID of the EKS cluster.|
