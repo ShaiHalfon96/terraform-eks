@@ -115,14 +115,12 @@ The following variables are available to customize the deployment:
 ### Default `node_groups` Configuration
 
 ```hcl
-worker_groups = [
+node_groups = [
   {
-    desired_capacity = 2
-      max_capacity     = 3
-      min_capacity     = 1
-
-      instance_type = "t3.micro"
-      key_name       = ""
+    desired_size                  = 2
+    max_size                      = 3
+    min_size                      = 1
+    instance_types                = ["t3.micro"]
   }
 ]
 

@@ -1,6 +1,6 @@
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.24.0"
+  version         = "~> 20.0"
   cluster_name    = var.cluster_name
   cluster_version = "1.30"
   vpc_id          = module.vpc.vpc_id
@@ -8,7 +8,7 @@ module "eks" {
 
   tags = var.tags
 
-  node_groups = {
+  eks_managed_node_groups = {
     default = var.node_groups
   }
 }

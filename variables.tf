@@ -39,18 +39,16 @@ variable "root_volume_type" {
 variable "node_groups" {
   description = "Configuration for node groups in the EKS cluster."
   type        = object({
-    desired_capacity              = number
-    max_capacity                  = number
-    min_capacity                  = number
-    instance_type                 = string
-    key_name                      = string
+    desired_size              = number
+    max_size                  = number
+    min_size                  = number
+    instance_types            = list(string)
   })
   default = {
-      desired_capacity              = 2
-      max_capacity                  = 3
-      min_capacity                  = 1
-      instance_type                 = "t3.micro"
-      key_name                      = ""
+      desired_size                  = 2
+      max_size                      = 3
+      min_size                      = 1
+      instance_types                = ["t3.micro"]
     }
 }
 
