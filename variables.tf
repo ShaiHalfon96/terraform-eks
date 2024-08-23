@@ -10,10 +10,10 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
-variable "availability_zones" {
-  description = "List of availability zones to deploy resources in"
-  type        = list(string)
-  default     = ["us-east-1a"]
+variable "region" {
+  description = "The AWS region where resources will be created"
+  type        = string
+  default     = "eu-north-1"
 }
 
 variable "tags" {

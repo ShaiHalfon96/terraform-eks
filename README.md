@@ -105,7 +105,7 @@ The following variables are available to customize the deployment:
 | --- | --- | --- | --- |
 | `cluster_name` | The name of the EKS cluster. | `string` | `"my-eks-cluster"` |
 | `vpc_cidr` | The CIDR block for the VPC. | `string` | `"10.0.0.0/16"` |
-| `availability_zones` | List of availability zones to deploy resources in. | `list(string)` | `["us-west-2a"]` |
+| `region` | The AWS region where resources will be created | `string` | `eu-north-1` |
 | `cluster_version` | The Kubernetes version for the EKS cluster. | `string` | `"1.30"` |
 | `root_volume_type` | EBS volume type for the root volumes of worker nodes. | `string` | `"gp2"` |
 | `node_groups` | List of node group configurations. | `list(object)` | See below for default |
