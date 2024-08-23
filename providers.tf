@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.availability_zone
+  region = var.availability_zones
 }
 terraform {
   required_providers {
