@@ -101,22 +101,29 @@ resource "aws_security_group" "worker_group" {
 
 The following variables are available to customize the deployment:
 
-- **`cluster_name`**: (String) The name of the EKS cluster.
-- **`cidr`**: (String) The CIDR block for the VPC.
-- **`azs`**: (List of Strings) The availability zones to be used for the subnets.
-- **`root_volume_type`**: (String) The EBS volume type for the root volumes of worker nodes. Default is `gp2`.
-- **`worker_groups`**: (List of Objects) Configuration for worker groups. Each object should include:
-    - `name`: (String) Name of the worker group.
-    - `instance_type`: (String) EC2 instance type for the worker nodes.
-    - `asg_desired_capacity`: (Number) Desired capacity of the autoscaling group.
-    - `additional_security_group_ids`: (List of Strings) Additional security groups for the worker group.
-- **`security_groups`**: (List of Objects) Configuration for security groups. Each object should include:
-    - `name`: (String) Name of the security group.
-    - `description`: (String) Description of the security group.
-    - `ingress`: (List of Objects) Ingress rules.
-    - `egress`: (List of Objects) Egress rules.
-- **`tags`**: (Map) Tags to be applied to all resources.
+| Variable | Description | Type | Default |
+| --- | --- | --- | --- |
+| `cluster_name` | The name of the EKS cluster. | `string` | `"my-eks-cluster"` |
+| `cidr` | The CIDR block for the VPC. | `string` | `"10.0.0.0/16"` |
+| `availability_zones` | List of availability zones to deploy resources in. | `list(string)` | `["us-west-2a"]` |
+| `cluster_version` | The Kubernetes version for the EKS cluster. | `string` | `"1.30"` |
+| `root_volume_type` | EBS volume type for the root volumes of worker nodes. | `string` | `"gp2"` |
+| `worker_groups` | List of worker group configurations. | `list(object)` | See below for default |
+| `tags` | A map of tags to apply to resources. | `map(string)` | `{ Environment = "dev" }` |
 
+### Default `worker_groups` Configuration
+
+```hcl
+worker_groups = [
+  {
+    name                          = "worker-group-1"
+    instance_type                 = "t3.micro"
+    asg_desired_capacity          = 1
+    additional_security_group_ids = []
+  }
+]
+
+```
 ### 5. Example
 
 Here’s an example of how to use the module:
@@ -201,6 +208,8 @@ module "eks_cluster" {
 
 This module will output the following:
 
-- **`eks_cluster_id`**: The ID of the EKS cluster.
-- **`vpc_id`**: The ID of the VPC.
-- **`worker_group_ids`**: The IDs of the worker node groups.
+| Output | Description |
+| --- | --- |
+| `eks_cluster_id` | The ID of the created EKS cluster. |
+| `vpc_id` | The ID of the created VPC. |
+| `worker_group_ids` | The IDs of the worker node groups. |
